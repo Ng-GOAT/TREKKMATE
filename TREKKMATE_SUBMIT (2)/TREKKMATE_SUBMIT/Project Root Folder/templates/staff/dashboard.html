@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<h2>⛰️ Staff Dashboard</h2>
+<p class="text-muted">Welcome back, {{ session.get('full_name') }}! Here are your assigned treks.</p>
+
+<!-- Assigned Treks -->
+<div class="row">
+    {% for trek in treks %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 trek-card">
+            <div class="card-body">
+                <h5 class="card-title">{{ trek.name }}</h5>
+                <p class="card-text">
+                    <strong>Location:</strong> {{ trek.location }}<br>
+                    <strong>Difficulty:</strong> {{ trek.difficulty }}<br>
+                    <strong>Slots:</strong> {{ trek.available_slots }}/{{ trek.total_slots }}<br>
+                    <strong>Booked:</strong> {{ trek.booked_count }}<br>
+                    <strong>Price:</strong> Rs.{{ trek.price }}
+                </p>
+                <a href="{{ url_for('staff_trek_detail', trek_id=trek.id) }}" class="btn btn-success">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not treks %}
+    <div class="text-center text-muted py-5">
+        <h5>No treks assigned to you yet.</h5>
+        <p>Wait for admin to assign treks.</p>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Trek - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<h2>✏️ Edit Trek</h2>
+<p class="text-muted">Update the details for "{{ trek.name }}".</p>
+
+<div class="card" style="max-width: 700px;">
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('admin_edit_trek', trek_id=trek.id) }}">
+            <div class="mb-3">
+                <label for="name" class="form-label">Trek Name</label>
+                <input type="text" class="form-control" id="name" name="name" required value="{{ trek.name }}">
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required value="{{ trek.location }}">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="difficulty" class="form-label">Difficulty</label>
+                    <select class="form-select" id="difficulty" name="difficulty" required>
+                        <option value="easy" {% if trek.difficulty == 'easy' %}selected{% endif %}>Easy</option>
+                        <option value="medium" {% if trek.difficulty == 'medium' %}selected{% endif %}>Medium</option>
+                        <option value="hard" {% if trek.difficulty == 'hard' %}selected{% endif %}>Hard</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="total_slots" class="form-label">Total Slots</label>
+                    <input type="number" class="form-control" id="total_slots" name="total_slots" required min="1" value="{{ trek.total_slots }}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price (₹)</label>
+                <input type="number" class="form-control" id="price" name="price" required min="0" value="{{ trek.price }}">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3">{{ trek.description or '' }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Update Trek</button>
+            <a href="{{ url_for('admin_treks') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+/* ============================================
+   TREKKMATE - Custom Styles
+   Nishant Girhepunje 24F3000141
+   ============================================ */
+
+/* basic page setup */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+/* push footer down */
+.container.mt-4.mb-5 {
+    flex: 1;
+}
+
+/* navigation bar */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+/* hero section */
+.hero-section {
+    background: linear-gradient(135deg, #15803d 0%, #4ade80 100%);
+    color: white;
+    padding: 80px 0;
+    margin-bottom: 40px;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+}
+
+/* card styles */
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    border-radius: 12px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body h5 {
+    color: #15803d;
+    font-weight: 600;
+}
+
+/* stats circle for dashboard */
+.stat-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #4ade80;
+    border: 3px solid #15803d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+}
+
+.stat-circle h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.stat-circle p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+}
+
+/* dark table */
+.table-dark {
+    background-color: #2c3e50;
+}
+
+.table-dark th {
+    background-color: #1a252f;
+}
+
+/* buttons */
+.btn-success {
+    background-color: #15803d;
+    border-color: #15803d;
+}
+
+.btn-success:hover {
+    background-color: #14532d;
+    border-color: #14532d;
+}
+
+/* trek cards */
+.trek-card {
+    border-left: 4px solid #15803d;
+}
+
+.trek-card .card-title {
+    color: #15803d;
+}
+
+/* form focus */
+.form-control:focus {
+    border-color: #4ade80;
+    box-shadow: 0 0 0 0.2rem rgba(74, 222, 128, 0.25);
+}
+
+/* footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer a {
+    color: #4ade80;
+    text-decoration: none;
+}
+
+/* login/register page */
+.auth-container {
+    max-width: 450px;
+    margin: 40px auto;
+}
+
+.auth-container .card {
+    padding: 30px;
+}
+
+.auth-container .card h2 {
+    color: #15803d;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* flash messages */
+.alert {
+    border-radius: 8px;
+}
+
+/* search box */
+.search-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .stat-circle {
+        width: 120px;
+        height: 120px;
+    }
+    .stat-circle h2 {
+        font-size: 1.6rem;
+    }
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+}

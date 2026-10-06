@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <!-- Left Column: Stats -->
+    <div class="col-md-8">
+        <h2>⛰️ Admin Dashboard</h2>
+        <p class="text-muted">Welcome back, Admin! Here's what's happening.</p>
+
+        <!-- Stats Circles - Row 1 -->
+        <div class="row mt-4">
+            <div class="col-6 col-md-3 mb-3">
+                <div class="stat-circle">
+                    <h2>{{ total_treks }}</h2>
+                    <p>Treks</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <div class="stat-circle">
+                    <h2>{{ total_staff }}</h2>
+                    <p>Staff</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Circles - Row 2 -->
+        <div class="row">
+            <div class="col-6 col-md-3 mb-3">
+                <div class="stat-circle">
+                    <h2>{{ total_users }}</h2>
+                    <p>Users</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <div class="stat-circle">
+                    <h2>{{ total_bookings }}</h2>
+                    <p>Bookings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Side Menu -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Menu</h5>
+            </div>
+            <div class="card-body">
+                <p><a href="{{ url_for('admin_treks') }}">Manage Treks</a></p>
+                <p><a href="{{ url_for('admin_staff') }}">Manage Staff</a></p>
+                <p><a href="{{ url_for('admin_users') }}">Manage Users</a></p>
+                <p><a href="{{ url_for('admin_bookings') }}">All Bookings</a></p>
+                <p><a href="{{ url_for('admin_search') }}">Search</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

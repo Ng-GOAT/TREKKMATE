@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Staff - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>👥 Manage Staff</h2>
+    <a href="{{ url_for('admin_add_staff') }}" class="btn btn-success">+ Add Staff</a>
+</div>
+
+<!-- Staff Table -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in staff_list %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.full_name }}</td>
+                <td>{{ s.username }}</td>
+                <td>{{ s.phone or '-' }}</td>
+                <td>
+                    {% if s.status == 'active' %}
+                        <span class="badge bg-success">Active</span>
+                    {% elif s.status == 'pending' %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif s.status == 'blacklisted' %}
+                        <span class="badge bg-danger">Blacklisted</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if s.status == 'pending' %}
+                        <a href="{{ url_for('admin_approve_staff', user_id=s.id) }}" class="btn btn-sm btn-success">Approve</a>
+                    {% endif %}
+                    {% if s.status != 'blacklisted' %}
+                        <a href="{{ url_for('admin_blacklist_staff', user_id=s.id) }}" class="btn btn-sm btn-warning">Blacklist</a>
+                    {% else %}
+                        <a href="{{ url_for('admin_activate_staff', user_id=s.id) }}" class="btn btn-sm btn-info">Activate</a>
+                    {% endif %}
+                    <a href="{{ url_for('admin_delete_staff', user_id=s.id) }}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this staff member?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if not staff_list %}
+    <div class="text-center text-muted py-5">
+        <h5>No staff members found.</h5>
+    </div>
+{% endif %}
+
+{% endblock %}

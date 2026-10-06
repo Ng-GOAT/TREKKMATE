@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Assign Staff - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<h2>👤 Assign Staff to Trek</h2>
+<p class="text-muted">Assign a staff member to "{{ trek.name }}".</p>
+
+<div class="card" style="max-width: 500px;">
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('admin_assign_staff', trek_id=trek.id) }}">
+            <div class="mb-3">
+                <label for="staff_id" class="form-label">Select Staff Member</label>
+                <select class="form-select" id="staff_id" name="staff_id" required>
+                    <option value="">-- Choose Staff --</option>
+                    {% for staff in staff_list %}
+                        <option value="{{ staff.id }}" {% if trek.staff_id == staff.id %}selected{% endif %}>
+                            {{ staff.full_name }} ({{ staff.username }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Assign Staff</button>
+            <a href="{{ url_for('admin_treks') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

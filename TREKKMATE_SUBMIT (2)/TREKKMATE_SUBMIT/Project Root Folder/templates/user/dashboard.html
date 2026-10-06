@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}My Dashboard - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<h2>⛰️ My Dashboard</h2>
+<p class="text-muted">Welcome back, {{ session.get('full_name') }}!</p>
+
+<!-- My Bookings Section -->
+<div class="mb-5">
+    <h4>📋 My Bookings</h4>
+    {% if my_bookings %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Trek</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
+                    <th>Start Date</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in my_bookings %}
+                <tr>
+                    <td>{{ b.trek_name }}</td>
+                    <td>{{ b.location }}</td>
+                    <td>{{ b.difficulty }}</td>
+                    <td>{{ b.start_date }}</td>
+                    <td>{{ b.booking_date }}</td>
+                    <td>
+                        <span class="badge
+                            {% if b.status == 'Booked' %}bg-success
+                            {% elif b.status == 'Cancelled' %}bg-danger
+                            {% else %}bg-secondary{% endif %}">
+                            {{ b.status }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if b.status == 'Booked' %}
+                            <a href="{{ url_for('user_cancel_booking', booking_id=b.id) }}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Cancel this booking?')">Cancel</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="text-muted">You haven't booked any treks yet. <a href="{{ url_for('user_treks') }}">Browse treks</a></div>
+    {% endif %}
+</div>
+
+<!-- Available Treks Section (First 3) -->
+<div>
+    <h4>🏔️ Available Treks</h4>
+    <div class="row">
+        {% for trek in available_treks[:3] %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 trek-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ trek.name }}</h5>
+                    <p class="card-text">
+                        <strong>Location:</strong> {{ trek.location }}<br>
+                        <strong>Difficulty:</strong> {{ trek.difficulty }}<br>
+                        <strong>Price:</strong> Rs.{{ trek.price }}<br>
+                        <strong>Slots Available:</strong> {{ trek.available_slots }}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{{ url_for('user_book_trek', trek_id=trek.id) }}" class="btn btn-success btn-sm">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('user_treks') }}" class="btn btn-outline-success">View All Treks</a>
+</div>
+
+{% endblock %}

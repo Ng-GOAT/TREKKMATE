@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Treks - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>🏔️ Manage Treks</h2>
+    <a href="{{ url_for('admin_add_trek') }}" class="btn btn-success">+ Add New Trek</a>
+</div>
+
+<!-- Treks Table -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Slots</th>
+                <th>Price (₹)</th>
+                <th>Staff</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>
+                    <span class="badge 
+                        {% if trek.difficulty == 'Easy' %}bg-success
+                        {% elif trek.difficulty == 'Moderate' %}bg-warning text-dark
+                        {% else %}bg-danger{% endif %}">
+                        {{ trek.difficulty }}
+                    </span>
+                </td>
+                <td>{{ trek.total_slots }}</td>
+                <td>₹{{ trek.price }}</td>
+                <td>
+                    {% if trek.staff_id %}
+                        {{ trek.staff_name }}
+                    {% else %}
+                        <span class="text-muted">Not Assigned</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('admin_edit_trek', trek_id=trek.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('admin_assign_staff', trek_id=trek.id) }}" class="btn btn-sm btn-info">Assign</a>
+                    <a href="{{ url_for('admin_delete_trek', trek_id=trek.id) }}" class="btn btn-sm btn-danger" 
+                       onclick="return confirm('Are you sure you want to delete this trek?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if not treks %}
+    <div class="text-center text-muted py-5">
+        <h5>No treks found. Add your first trek!</h5>
+    </div>
+{% endif %}
+
+{% endblock %}

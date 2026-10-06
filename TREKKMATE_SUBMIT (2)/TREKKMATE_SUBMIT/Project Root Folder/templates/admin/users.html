@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Users - TREKKMATE{% endblock %}
+
+{% block content %}
+
+<h2>👤 Manage Users</h2>
+<p class="text-muted">View and manage all registered users.</p>
+
+<!-- Users Table -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Username</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.full_name }}</td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.phone or '-' }}</td>
+                <td>
+                    {% if u.status == 'blacklisted' %}
+                        <span class="badge bg-danger">Blacklisted</span>
+                    {% else %}
+                        <span class="badge bg-success">Active</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if u.status != 'blacklisted' %}
+                        <a href="{{ url_for('admin_blacklist_user', user_id=u.id) }}" class="btn btn-sm btn-warning">Blacklist</a>
+                    {% else %}
+                        <a href="{{ url_for('admin_activate_user', user_id=u.id) }}" class="btn btn-sm btn-info">Activate</a>
+                    {% endif %}
+                    <a href="{{ url_for('admin_delete_user', user_id=u.id) }}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this user?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if not users %}
+    <div class="text-center text-muted py-5">
+        <h5>No users found.</h5>
+    </div>
+{% endif %}
+
+{% endblock %}
